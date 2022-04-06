@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 import sys
 import os
 
-sys.path.inset(0, os.path.join(os.path.dirname(__file__), 'diffbot'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'diffbot'))
 
 from diffbot.version import VERSION
 
@@ -21,7 +21,6 @@ setup(
         "requests>=2.0",
         "pandas>=1.0",
         "numpy>=1.0",
-        "json>=2.0"
     ],
     python_requires=">=3.5",
     classifiers=[
