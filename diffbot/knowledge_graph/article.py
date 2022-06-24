@@ -1,9 +1,10 @@
+from nntplib import ArticleInfo
 import re
 import numpy as np
 from datetime import datetime
 
 def buildArticleQuery():
-    pass
+    raise NotImplementedError("buildArticleQuery is not yet implemented.")
 
 def _parseTitle(data: dict):
     try:
@@ -12,7 +13,8 @@ def _parseTitle(data: dict):
         return None
 
 def _parseDate(data: dict):
-    format = "%Y-%m-%d %H:%M:%S"
+    # format = "%Y-%m-%d %H:%M:%S"
+    format = "%Y-%m-%d"
     try:
         date = data['estimatedDate']['timestamp'] / 1000
         return datetime.utcfromtimestamp(date).strftime(format)
@@ -95,34 +97,44 @@ def _parseTags(article, _min: int=10):
     tag_dict = {}
     try:
         tags = article['tags']
-        tag_labels = {f"tagLabel{i}": j['label'] 
+        tag_labels = {f"tagLabel{i}": j["label"] 
                       for i, j in enumerate(tags) if i < _min}
         tag_labels = _padTags(tag_labels, _min)
-        
-        tag_scores = {f"tagScore{i}": j['score'] 
+    except KeyError:
+        tag_labels = {f"tagLabel{i}": None for i in range(_min)}
+    
+    try:
+        tag_scores = {f"tagScore{i}": j["score"] 
                       for i, j in enumerate(tags) if i < _min}
         tag_scores = _padTags(tag_scores, _min)
-        
-        tag_sentiment = {f"tagSentiment{i}": j['sentiment'] 
+    except KeyError:
+        tag_scores = {f"tagScore{i}": None for i in range(_min)}
+
+    try:
+        tag_sentiment = {f"tagSentiment{i}": j["sentiment"]
                         for i, j in enumerate(tags) if i < _min}
         tag_sentiment = _padTags(tag_sentiment, _min)
-        
-        tag_type = {f"tagType{i}": j['types'][0].split('/')[-1]
-                    for i, j in enumerate(tags) if i < _min}
+    except KeyError:
+        tag_sentiment = {f"tagSentiment{i}": None for i in range(_min)}
+
+    try:        
+        tag_type = {f"tagType{i}": j["types"] if "types" in j.keys() and i < _min
+                    else None for i, j in enumerate(tags)}
         tag_type = _padTags(tag_type, _min)
-        
-        tag_uri = {f"tagURI{i}": j['uri'] 
+    except KeyError:
+        tag_type = {f"tagType{i}": None for i in range(_min)}
+
+    try:
+        tag_uri = {f"tagURI{i}": j["uri"] 
                 for i, j in enumerate(tags) if i < _min}
         tag_uri = _padTags(tag_uri, _min)
-        
-        tag_count = {'tag_count': len(tags)}
     except KeyError:
-        tag_labels = {f'tagLabel{i}': None for i in range(_min)}
-        tag_scores = tag_labels
-        tag_sentiment = tag_labels
-        tag_type = tag_labels
-        tag_uri = tag_labels
-        tag_count = {'tag_count': 0}
+        tag_uri = {f"tagURI{i}": None for i in range(_min)}
+
+    try:
+        tag_count = {"tag_count": len(tags)}
+    except:
+        tag_count = {"tag_count": 0}
         
     tag_dict.update(tag_labels)
     tag_dict.update(tag_scores)
@@ -157,4 +169,16 @@ def parseArticle(article):
     data.update(_parseTags(article))
     # data.update(_parseCategories(article))
 
+    return data
+
+
+def parseArticles(data_dict: dict) -> dict:
+    data = {}
+    for k0, v0 in data_dict.items():
+        if k0 == "data":
+            for d in v0:
+                article = d["entity"]
+                id = article["id"]
+                data[id] = parseArticle(article)
+    
     return data
