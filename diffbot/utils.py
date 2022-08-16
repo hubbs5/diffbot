@@ -20,4 +20,4 @@ def buildArticleQuery(_filter: str, token: str, type: str="query", size: int=50)
 
 
 def buildExtractArticleQuery(_filter: str, token: str, type: str="query"):
-    pass
+    raise NotImplementedError("buildExtractArticleQuery not yet implemented.")
