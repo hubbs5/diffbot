@@ -100,35 +100,35 @@ def _parseTags(article, _min: int=10):
         tag_labels = {f"tagLabel{i}": j["label"] 
                       for i, j in enumerate(tags) if i < _min}
         tag_labels = _padTags(tag_labels, _min)
-    except KeyError:
+    except:
         tag_labels = {f"tagLabel{i}": None for i in range(_min)}
     
     try:
         tag_scores = {f"tagScore{i}": j["score"] 
                       for i, j in enumerate(tags) if i < _min}
         tag_scores = _padTags(tag_scores, _min)
-    except KeyError:
+    except:
         tag_scores = {f"tagScore{i}": None for i in range(_min)}
 
     try:
         tag_sentiment = {f"tagSentiment{i}": j["sentiment"]
                         for i, j in enumerate(tags) if i < _min}
         tag_sentiment = _padTags(tag_sentiment, _min)
-    except KeyError:
+    except:
         tag_sentiment = {f"tagSentiment{i}": None for i in range(_min)}
 
     try:        
         tag_type = {f"tagType{i}": j["types"] if "types" in j.keys() and i < _min
                     else None for i, j in enumerate(tags)}
         tag_type = _padTags(tag_type, _min)
-    except KeyError:
+    except:
         tag_type = {f"tagType{i}": None for i in range(_min)}
 
     try:
         tag_uri = {f"tagURI{i}": j["uri"] 
                 for i, j in enumerate(tags) if i < _min}
         tag_uri = _padTags(tag_uri, _min)
-    except KeyError:
+    except:
         tag_uri = {f"tagURI{i}": None for i in range(_min)}
 
     try:
@@ -148,7 +148,7 @@ def _parseTags(article, _min: int=10):
 def _padTags(tag_dict, N):
     # Adds None entries if not enough entries
     n = len(tag_dict)
-    k = list(tag_dict.keys())[0][:-1]
+    k = list(tag_dict.keys())[0][:-1] # WTF
     if n < N:
         _ = [tag_dict.update({f'{k}{n+i}': None}) for i in range(N-n)]
         
