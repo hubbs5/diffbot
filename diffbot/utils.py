@@ -13,8 +13,9 @@ def _buildKnowledgeGraphQuery(_filter: str, token: str, type: str="query", size:
     return url
 
 def build_knowledge_graph_query(_filter: str, token: str, type: str="query", size: int=50):
-    url = f"{KG_BASE_URL}?type={type}&token={token}&query={_filter}&size={size}"
-    return urllib.parse.quote(url)
+    _url = urllib.parse.quote(f"?type={type}&token={token}&query={_filter}&size={size}")
+    url = f"{KG_BASE_URL}{_url}"
+    return url
 
 
 def buildOrganizationQuery(_filter: str, token: str, type: str="query", size: int=50):
