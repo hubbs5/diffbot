@@ -17,6 +17,14 @@ def build_knowledge_graph_query(_filter: str, token: str, type: str="query", siz
     url = f"{KG_BASE_URL}{_url}"
     return url
 
+def build_knowledge_graph_post_query(_filter: str, token: str, type: str="query", size: int=50):
+    url = f"{KG_BASE_URL}?token={token}"
+    payload = {
+        "query": _filter,
+        "type": type,
+        "size": size,
+    }
+    return url, payload
 
 def buildOrganizationQuery(_filter: str, token: str, type: str="query", size: int=50):
     _filter = "type:Organization " + _filter
