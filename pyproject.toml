@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "diffbot"
+version = "0.0.2"
+description = "Provides functions to interact with the Diffbot API"
+authors = ["Christian <christiandhubbs@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+requests = "^2.31.0"
+pandas = "^2.0.3"
+numpy = "^1.25.1"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.7.0"
+pytest = "^7.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
