@@ -20,7 +20,7 @@ def _buildKnowledgeGraphQuery(
 
 def build_knowledge_graph_query(
     _filter: str, token: str, type: str = "query", size: int = 50
-):
+    ):
     _url = urllib.parse.quote(f"?type={type}&token={token}&query={_filter}&size={size}")
     url = f"{KG_BASE_URL}{_url}"
     return url

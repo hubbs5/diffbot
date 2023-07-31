@@ -106,10 +106,7 @@ def _parseImportanceScore(data: dict):
 
 def _parseCustomers(data: dict):
     # TODO: This can have multiple entries so a flat table isn't the best representation
-    try:
-        return data["customers"]
-    except KeyError:
-        return None
+    return data.get("customers", None)
 
 
 def _parseCrawlTimestamp(data: dict):
@@ -119,6 +116,10 @@ def _parseCrawlTimestamp(data: dict):
         return datetime.utcfromtimestamp(data["crawlTimestamp"]).strftime(format)
     except KeyError:
         return None
+
+
+def _parse_isPublic(data: dict) -> bool:
+    return data.get("isPublic", None)
 
 
 def _parseLocations(data: dict):
@@ -221,7 +222,6 @@ def _parseNACEClassification(
 ):
     return _parseClassificationCodes(data, class_abbrv, target, _min)
 
-
 def parseOrganization(data_dict):
     # Parse JSON response according to values above and compute summary stats
     data = {}
@@ -252,6 +252,7 @@ def parseOrganization(data_dict):
                 data[name]["locations"] = _parseLocations(d0)
                 data[name]["description"] = _parseDescription(d0)
                 data[name]["descriptors"] = _parseDescriptors(d0)
+                data[name]["isPublic"] = _parse_isPublic(d0)
                 data[name].update(_parseNACEClassification(d0))
                 data[name].update(_parseNAICSClassification(d0))
                 data[name].update(_parseSICClassification(d0))
