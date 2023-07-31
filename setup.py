@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 import sys
 import os
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'diffbot'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "diffbot"))
 
 from diffbot.version import VERSION
 
@@ -24,12 +24,12 @@ setup(
     ],
     python_requires=">=3.5",
     classifiers=[
-		'Development Status :: 3 - Alpha',
-		'Intended Audience :: Developers',
-		'Programming Language :: Python :: 3',
-		'Programming Language :: Python :: 3.5',
-		'Programming Language :: Python :: 3.6',
-		'Programming Language :: Python :: 3.7',
-		'Programming Language :: Python :: 3.8',
-	]
+        "Development Status :: 3 - Alpha",
+        "Intended Audience :: Developers",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+    ],
 )
