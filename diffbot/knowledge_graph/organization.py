@@ -122,6 +122,17 @@ def _parse_isPublic(data: dict) -> bool:
     return data.get("isPublic", None)
 
 
+def _parse_secCentralIndexKeys(data, _min=10):
+    keys = {}
+    ciks = data.get("secCentralIndexKeys", [])
+    
+    keys = {f"secCentralIndexKey{i}": k for i, k in enumerate(ciks) if i < _min}
+    # Add padding, if necessary
+    if len(keys) < _min:
+        keys.update({f"secCentralIndexKey{i}": "" for i in range(len(keys), _min)})
+    return keys
+
+
 def _parseLocations(data: dict):
     # TODO: This can have multiple entries so a flat table isn't the best representation
     try:
@@ -253,6 +264,7 @@ def parseOrganization(data_dict):
                 data[name]["description"] = _parseDescription(d0)
                 data[name]["descriptors"] = _parseDescriptors(d0)
                 data[name]["isPublic"] = _parse_isPublic(d0)
+                data[name].update(_parse_secCentralIndexKeys(d0))
                 data[name].update(_parseNACEClassification(d0))
                 data[name].update(_parseNAICSClassification(d0))
                 data[name].update(_parseSICClassification(d0))
