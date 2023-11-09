@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "diffbot"
-version = "0.0.2"
+version = "0.0.2a"
 description = "Provides functions to interact with the Diffbot API"
 authors = ["Christian <christiandhubbs@gmail.com>"]
 license = "MIT"

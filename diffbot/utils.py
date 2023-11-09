@@ -1,3 +1,5 @@
+# NOTE: All Knowledge Graph functions are to be moved to the knowledge graph module.
+# diffbot/knowledge_graph.__init__.py
 import urllib.parse
 import warnings
 
@@ -38,17 +40,29 @@ def build_knowledge_graph_post_query(
     return url, payload
 
 
-def buildOrganizationQuery(
+def build_organization_query(
     _filter: str, token: str, type: str = "query", size: int = 50
 ):
     _filter = "type:Organization " + _filter
     return build_knowledge_graph_query(_filter, token, type, size)
 
 
-def buildArticleQuery(_filter: str, token: str, type: str = "query", size: int = 50):
+def buildOrganizationQuery(
+    _filter: str, token: str, type: str = "query", size: int = 50
+    ):
+    warnings.warn("This function is deprecated. Use build_organization_query instead.")
+    return build_organization_query(_filter, token, type, size)
+
+
+def build_article_query(_filter: str, token: str, type: str = "query", size: int = 50):
     _filter = "type:Article " + _filter
     return build_knowledge_graph_query(_filter, token, type, size)
 
 
-def buildExtractArticleQuery(_filter: str, token: str, type: str = "query"):
-    raise NotImplementedError("buildExtractArticleQuery not yet implemented.")
+def buildArticleQuery(_filter: str, token: str, type: str = "query", size: int = 50):
+    warnings.warn("This function is deprecated. Use build_article_query instead.")
+    return build_article_query(_filter, token, type, size)
+
+
+def build_extract_article_query(_filter: str, token: str, type: str = "query"):
+    raise NotImplementedError("build_extract_article_query not yet implemented.")
