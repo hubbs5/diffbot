@@ -7,9 +7,11 @@ ARTICLE_BASE_URL = "https://api.diffbot.com/v3/article"
 ENHANCE_BASE_URL = "https://kg.diffbot.com/kg/v3/enhance_endpoint"
 
 def build_knowledge_graph_query(
-    _filter: str, token: str, type: str = "query", size: int = 50
+    _filter: str, token: str, size: int = 50
     ):
-    _url = urllib.parse.quote(f"?type={type}&token={token}&query={_filter}&size={size}")
+    _url = f"?token={token}&query={urllib.parse.quote(_filter)}"
+    if size is not None or size > 0:
+        _url += f"&size={size}"
     url = f"{KG_BASE_URL}{_url}"
     return url
 
