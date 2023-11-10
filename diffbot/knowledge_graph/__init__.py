@@ -29,14 +29,14 @@ def build_knowledge_graph_post_query(
 
 
 def build_organization_query(
-    _filter: str, token: str, type: str = "query", size: int = 50
+    _filter: str, token: str, size: int = 50
 ):
     _filter = "type:Organization " + _filter
-    return build_knowledge_graph_query(_filter, token, type, size)
+    return build_knowledge_graph_query(_filter, token, size)
 
-def build_article_query(_filter: str, token: str, type: str = "query", size: int = 50):
+def build_article_query(_filter: str, token: str, size: int = 50):
     _filter = "type:Article " + _filter
     return build_knowledge_graph_query(_filter, token, type, size)
 
-def build_extract_article_query(_filter: str, token: str, type: str = "query"):
+def build_extract_article_query(_filter: str, token: str):
     raise NotImplementedError("build_extract_article_query not yet implemented.")
